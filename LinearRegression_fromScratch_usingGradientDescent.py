@@ -38,35 +38,37 @@ def min_cost(b_current, w_current, points, lr):
         w_gradient += -(2/float(m)) * x * (y - ((w_current * x) + b_current))
     new_b= b_current - (lr * b_gradient)
     new_w= w_current - (lr * w_gradient)
-    return [new_b, new_w ]
+    return [new_b, new_w]
+
+# function to calculate root mean squared error
+def errorcal(b,w,points,l):
+    points=np.array(points)
+    #import pdb
+    #pdb.set_trace()
+    te=0
+    #try:
+    for i in range(l):
+        x=points[i,0]
+        y=points[i,1]
+        te+=(y-(w*x+b))**2
+    te=(te/float(m))**(0.5)
+    return te 
 
 def gradient_descent(points, starting_b, starting_w, lr):
     b= starting_b
     w= starting_w
-    pi=0
+    #pi=0
     for i in range(m):
         b, w = min_cost(b, w, np.array(points), lr)
         b_g[i]=b
         w_g[i]=w
-        C[pi]=errorcal(b,w,points,m)
-        pi+=1
+        C[i]=errorcal(b,w,points,m)
+        #pi+=1
         #b_g[i]=b
         #w_g[i]=w
     return [b, w]
 
-# function to calculate root mean squared error
-def errorcal(b,w,points,l):
-	points=np.array(points)
-	#import pdb
-	#pdb.set_trace()
-	te=0
-	#try:
-	for i in range(l):
-		x=points[i,0]
-		y=points[i,1]
-		te+=(y-(w*x+b))**2
-	te=(te/float(m))**(0.5)
-	return te 
+
 
 # main()
 
@@ -98,10 +100,11 @@ for i in range(n):
 """
 print("\n RMSE whle testing = " + str(errorcal(b_final,w_final,testing_data,n)))
 
-
+# The points to be plotted in the graph
 XG=b_g
 YG=w_g
 ZG=np.array([C,b_g])
+XYZ=np.array([C,XG,yG])
 
 #plotting 3D
 from mpl_toolkits.mplot3d import Axes3D
@@ -113,6 +116,6 @@ ax.set_ylabel('Y Label')
 ax.set_zlabel('Z Label')
 
 plt.show()
-#np.savetxt("foo.csv", XYZ, delimiter=',', comments="")
+np.savetxt("foo.csv", XYZ, delimiter=',', comments="")
 
 # END
