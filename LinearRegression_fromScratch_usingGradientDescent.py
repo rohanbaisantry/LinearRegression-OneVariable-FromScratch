@@ -104,7 +104,7 @@ print("\n RMSE whle testing = " + str(errorcal(b_final,w_final,testing_data,n)))
 XG=b_g
 YG=w_g
 ZG=np.array([C,b_g])
-XYZ=np.array([C,XG,yG])
+XYZ=np.array([C,XG,YG])
 
 #plotting 3D
 from mpl_toolkits.mplot3d import Axes3D
